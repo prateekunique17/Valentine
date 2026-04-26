@@ -8,6 +8,14 @@ const bgMusic = document.getElementById('bg-music');
 const musicIcon = document.getElementById('music-icon');
 const buttonsContainer = document.querySelector('.buttons');
 
+// Try to autoplay immediately on page load
+bgMusic.play().then(() => {
+    musicIcon.textContent = '🔊';
+    musicStarted = true;
+}).catch(() => {
+    // Browser blocked autoplay — will start on first touch/click instead
+});
+
 const noPhrases = [
     "No",
     "Are you sure?",
@@ -362,14 +370,19 @@ function toggleMusic() {
     }
 }
 
-// Start music on first click to bypass browser restrictions
-document.addEventListener('click', () => {
+// Start music on first interaction (click OR touch) to bypass browser restrictions
+function startMusicOnFirstInteraction() {
     if (!musicStarted) {
         bgMusic.play().then(() => {
             musicIcon.textContent = '🔊';
             musicStarted = true;
         }).catch(() => {
-            // Autoplay blocked, wait for manual toggle
+            // Autoplay blocked, user must tap the music button manually
         });
     }
-}, { once: true });
+    document.removeEventListener('click', startMusicOnFirstInteraction);
+    document.removeEventListener('touchstart', startMusicOnFirstInteraction);
+}
+
+document.addEventListener('click', startMusicOnFirstInteraction);
+document.addEventListener('touchstart', startMusicOnFirstInteraction);
