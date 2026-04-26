@@ -347,3 +347,29 @@ function createSparkle(x, y) {
         sparkle.remove();
     }, 800);
 }
+
+// Music Control Logic
+let musicStarted = false;
+
+function toggleMusic() {
+    if (bgMusic.paused) {
+        bgMusic.play();
+        musicIcon.textContent = '🔊';
+        musicStarted = true;
+    } else {
+        bgMusic.pause();
+        musicIcon.textContent = '🔇';
+    }
+}
+
+// Start music on first click to bypass browser restrictions
+document.addEventListener('click', () => {
+    if (!musicStarted) {
+        bgMusic.play().then(() => {
+            musicIcon.textContent = '🔊';
+            musicStarted = true;
+        }).catch(() => {
+            // Autoplay blocked, wait for manual toggle
+        });
+    }
+}, { once: true });

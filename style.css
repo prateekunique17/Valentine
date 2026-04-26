@@ -4,14 +4,19 @@
     box-sizing: border-box;
 }
 
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden !important;
+    touch-action: none;
+}
+
 body {
     font-family: 'Nunito', sans-serif;
-    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
-    overflow: hidden;
     position: relative;
     perspective: 1000px;
 }
@@ -41,12 +46,12 @@ body {
 .container {
     background: transparent;
     border-radius: 30px;
-    padding: 3rem;
+    padding: 1.5rem; /* Reduced padding */
     text-align: center;
     box-shadow: none;
     z-index: 10;
     max-width: 90%;
-    width: 450px;
+    width: 400px; /* Reduced width */
     transition: transform 0.3s ease;
     transform-style: preserve-3d;
     will-change: transform;
@@ -58,26 +63,39 @@ body {
 
 h1 {
     color: #ff4b72;
-    font-size: 2.2rem;
+    font-size: 1.8rem; /* Reduced font size */
     font-weight: 800;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.6);
 }
 
 .gif-container {
-    margin-bottom: 2rem;
+    width: 100%;
+    max-height: 200px;
+    margin-bottom: 1rem;
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    background: #fff;
-    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    box-shadow: none;
+}
+
+.gif-container img {
+    max-height: 100%;
+    width: auto;
+    display: block;
 }
 
 #cat-gif {
-    width: 100%;
+    max-width: 100%;
+    max-height: 180px; /* Even smaller to ensure it fits perfectly */
+    width: auto;
     height: auto;
     border-radius: 15px;
     display: block;
+    margin: 0 auto;
 }
 
 .buttons {
@@ -175,10 +193,25 @@ h1 {
 }
 
 @media (max-width: 500px) {
+    html, body {
+        overflow: hidden !important;
+        height: 100dvh; /* Dynamic viewport height for mobile */
+    }
     body {
-        align-items: flex-start;
-        overflow-y: auto;
-        padding: 2rem 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+    }
+    
+    /* Hide scrollbar visuals for cleaner look */
+    body::-webkit-scrollbar {
+        display: none;
+    }
+    body {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
     }
     .hearts-bg {
         position: fixed;
@@ -189,11 +222,11 @@ h1 {
         width: 95%;
     }
     h1 {
-        font-size: 1.6rem;
+        font-size: 1.4rem; /* Smaller */
     }
     .btn {
-        font-size: 1rem;
-        padding: 0.8em 1.5em;
+        font-size: 0.9rem;
+        padding: 0.7em 1.2em;
     }
     .buttons {
         gap: 1rem;
@@ -217,9 +250,14 @@ h1 {
         width: 100%;
         font-size: 1rem;
     }
+    .gif-container {
+        max-height: 150px;
+        background: transparent;
+        box-shadow: none;
+    }
     .envelope-wrapper.open .letter-paper {
         width: 85vw;
-        height: 300px;
+        height: 250px; /* Shorter letter */
     }
 }
 
@@ -274,10 +312,12 @@ h1 {
 }
 
 .surprise-btn {
-    margin-top: 2rem;
+    margin-top: 1rem;
     background: white;
     color: #ff4b72;
     border: 2px solid #ff4b72;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
 }
 
 .surprise-btn:hover {
@@ -347,7 +387,7 @@ h1 {
 }
 
 .envelope-wrapper.open .letter-paper {
-    height: 350px;
+    height: 280px; /* Reduced from 350px */
     width: 280px;
     bottom: 60px;
     z-index: 5;
